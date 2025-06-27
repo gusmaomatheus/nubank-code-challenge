@@ -1,4 +1,4 @@
-package br.com.gusmaomatheus.challenge.application.response;
+package br.com.gusmaomatheus.challenge.application;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.servlet.http.HttpServletRequest;
