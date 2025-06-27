@@ -23,7 +23,7 @@ public final class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    @OneToMany(mappedBy = "clientes", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Contato> contatos;
 
     public Cliente(String nome) {
@@ -32,6 +32,7 @@ public final class Cliente {
     }
 
     public void adicionarContato(Contato contato) {
+        contato.setCliente(this);
         this.contatos.add(contato);
     }
 
