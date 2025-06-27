@@ -1,12 +1,18 @@
-package br.com.gusmaomatheus.challenge.model;
-
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+package br.com.gusmaomatheus.challenge.model.entity;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Table(name = "clientes")
 @Entity
@@ -31,7 +37,8 @@ public final class Cliente {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Cliente cliente = (Cliente) o;
         return Objects.equals(getId(), cliente.getId());
     }

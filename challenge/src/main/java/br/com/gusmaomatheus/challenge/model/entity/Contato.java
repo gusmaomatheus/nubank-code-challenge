@@ -1,11 +1,16 @@
-package br.com.gusmaomatheus.challenge.model;
-
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+package br.com.gusmaomatheus.challenge.model.entity;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "contatos")
@@ -28,8 +33,10 @@ public final class Contato {
     }
 
     private boolean validarEmail(String email) {
-        if (Objects.isNull(email)) return false;
-        if (email.isEmpty()) return false;
+        if (Objects.isNull(email))
+            return false;
+        if (email.isEmpty())
+            return false;
 
         final String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         final Pattern pattern = Pattern.compile(regex);
@@ -59,7 +66,8 @@ public final class Contato {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Contato contato = (Contato) o;
         return Objects.equals(getId(), contato.getId());
     }
