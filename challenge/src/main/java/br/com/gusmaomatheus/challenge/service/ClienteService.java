@@ -1,10 +1,12 @@
 package br.com.gusmaomatheus.challenge.service;
 
 import br.com.gusmaomatheus.challenge.application.exception.ResourceAlreadyExistsException;
+import br.com.gusmaomatheus.challenge.model.dto.ClienteResponse;
 import br.com.gusmaomatheus.challenge.model.entity.Cliente;
 import br.com.gusmaomatheus.challenge.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Objects;
 
 @Service
@@ -15,7 +17,7 @@ public final class ClienteService {
         this.repository = repository;
     }
 
-    public void inserir(Cliente cliente) {
+    public ClienteResponse inserir(Cliente cliente) {
         Objects.requireNonNull(cliente, "Cliente must not be null.");
 
         if (repository.existsByNome(cliente.getNome())) {
@@ -25,5 +27,7 @@ public final class ClienteService {
         }
 
         repository.save(cliente);
+
+        return new ClienteResponse(cliente.getId(), cliente.getNome(), Collections.emptyList());
     }
 }

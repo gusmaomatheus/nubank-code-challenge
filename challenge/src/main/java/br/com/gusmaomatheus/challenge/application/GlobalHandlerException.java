@@ -14,17 +14,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public final class GlobalHandlerException {
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception,
+    public ResponseEntity<ApiResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception,
                                                                                   HttpServletRequest request,
                                                                                   BindingResult result) {
         log.error("********** API ERROR **********", exception);
-        return ResponseEntity
-                .status(HttpStatus.UNPROCESSABLE_ENTITY)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(new ApiErrorResponse(
-                        request,
-                        HttpStatus.UNPROCESSABLE_ENTITY,
-                        "Campos inválidos.",
-                        result));
+
+        final ApiResponse errorResponse = ApiResponse.error(request, HttpStatus.UNPROCESSABLE_ENTITY, "Campos inválidos.", result);
+
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).contentType(MediaType.APPLICATION_JSON).body(errorResponse);
     }
 }
