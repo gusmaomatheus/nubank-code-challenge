@@ -24,7 +24,7 @@ public final class GlobalHandlerException {
                 .body(new ApiErrorResponse(
                         request,
                         HttpStatus.UNPROCESSABLE_ENTITY,
-                        "Campos inválidos",
+                        "Campos inválidos.",
                         result));
     }
 }

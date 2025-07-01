@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public final class ApiErrorResponse {
     private final int statusCode;
     private final String statusMessage;
     private final String errorMessage;
-    private List<String> errors;
+    private List<String> errors = new ArrayList<>();
 
     public ApiErrorResponse(HttpServletRequest request, HttpStatus status, String errorMessage) {
         this.requestUri = request.getRequestURI();
@@ -45,7 +46,7 @@ public final class ApiErrorResponse {
         }
 
         for (FieldError fieldError : fieldErrors) {
-            final String message = String.format("Parâmetro inválido: %s", fieldError.getDefaultMessage());
+            final String message = String.format("Parâmetro inválido: '%s'", fieldError.getDefaultMessage());
 
             this.errors.add(message);
         }
