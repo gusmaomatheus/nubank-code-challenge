@@ -1,5 +1,6 @@
 package br.com.gusmaomatheus.challenge.application;
 
+import br.com.gusmaomatheus.challenge.application.exception.ResourceAlreadyExistsException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,5 +23,15 @@ public final class GlobalHandlerException {
         final ApiResponse errorResponse = ApiResponse.error(request, HttpStatus.UNPROCESSABLE_ENTITY, "Campos inválidos.", result);
 
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).contentType(MediaType.APPLICATION_JSON).body(errorResponse);
+    }
+
+    @ExceptionHandler(ResourceAlreadyExistsException.class)
+    public ResponseEntity<ApiResponse> handlerResourceAlreadyExistsException(ResourceAlreadyExistsException exception,
+                                                                             HttpServletRequest request) {
+        log.error("********** API ERROR **********", exception);
+
+        final ApiResponse errorResponse = ApiResponse.error(request, HttpStatus.CONFLICT, exception.getMessage());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).contentType(MediaType.APPLICATION_JSON).body(errorResponse);
     }
 }
