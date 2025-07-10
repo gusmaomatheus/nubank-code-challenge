@@ -7,9 +7,7 @@ import br.com.gusmaomatheus.challenge.model.entity.Cliente;
 import br.com.gusmaomatheus.challenge.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,5 +45,18 @@ public final class ClienteService {
                     return new ClienteResponse(cliente.getId(), cliente.getNome(), contatos);
                 })
                 .collect(Collectors.toList());
+    }
+
+    public List<ContatoResponse> listarContatos(Long id) {
+        final Cliente cliente = repository.findById(id).orElseThrow(() -> {
+            final String errorMesage = String.format("O cliente de id '%d' não existe!", id);
+
+            return new NoSuchElementException(errorMesage);
+        });
+
+        return cliente.getContatos()
+                .stream()
+                .map(contato -> new ContatoResponse(contato.getEmail(), contato.getTelefone()))
+                .toList();
     }
 }

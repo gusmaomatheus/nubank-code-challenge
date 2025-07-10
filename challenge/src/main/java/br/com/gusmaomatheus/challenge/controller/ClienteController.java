@@ -3,6 +3,7 @@ package br.com.gusmaomatheus.challenge.controller;
 import br.com.gusmaomatheus.challenge.application.ApiResponse;
 import br.com.gusmaomatheus.challenge.model.dto.ClienteRequest;
 import br.com.gusmaomatheus.challenge.model.dto.ClienteResponse;
+import br.com.gusmaomatheus.challenge.model.dto.ContatoResponse;
 import br.com.gusmaomatheus.challenge.model.entity.Cliente;
 import br.com.gusmaomatheus.challenge.service.ClienteService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,6 +36,15 @@ public class ClienteController {
     public ResponseEntity<ApiResponse<List<ClienteResponse>>> listar(HttpServletRequest request) {
         final List<ClienteResponse> clienteResponses = service.listar();
         final ApiResponse<List<ClienteResponse>> body = ApiResponse.success(request, HttpStatus.OK, clienteResponses);
+
+        return ResponseEntity.status(HttpStatus.OK).body(body);
+    }
+
+    @GetMapping("/{id}/contatos")
+    public ResponseEntity<ApiResponse<List<ContatoResponse>>> listarContatos(@PathVariable(name = "id") Long id, HttpServletRequest request) {
+
+        final List<ContatoResponse>  contatoResponses = service.listarContatos(id);
+        final ApiResponse<List<ContatoResponse>>  body = ApiResponse.success(request, HttpStatus.OK, contatoResponses);
 
         return ResponseEntity.status(HttpStatus.OK).body(body);
     }
