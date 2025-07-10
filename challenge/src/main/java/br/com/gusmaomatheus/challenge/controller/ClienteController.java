@@ -9,10 +9,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/clientes")
@@ -30,5 +29,13 @@ public class ClienteController {
         final ApiResponse<ClienteResponse> body = ApiResponse.success(request, HttpStatus.CREATED, clienteResponse);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(body);
+    }
+
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<ClienteResponse>>> listar(HttpServletRequest request) {
+        final List<ClienteResponse> clienteResponses = service.listar();
+        final ApiResponse<List<ClienteResponse>> body = ApiResponse.success(request, HttpStatus.OK, clienteResponses);
+
+        return ResponseEntity.status(HttpStatus.OK).body(body);
     }
 }
