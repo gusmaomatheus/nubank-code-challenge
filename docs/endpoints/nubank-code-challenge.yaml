@@ -1,0 +1,143 @@
+type: collection.insomnia.rest/5.0
+name: api
+meta:
+  id: wrk_30059fb7415141a7982c25ef03cd5016
+  created: 1752109145895
+  modified: 1752109260656
+  description: ""
+collection:
+  - name: clientes
+    meta:
+      id: fld_c65072ed9e0744a5be903c975dae3e4d
+      created: 1752109277988
+      modified: 1752109421515
+      sortKey: -1752109277988
+      description: ""
+    children:
+      - url: "{{api_url}}/clientes"
+        name: Inserir cliente
+        meta:
+          id: req_36537079e5634b82820b701cae63cae7
+          created: 1752109297235
+          modified: 1752109616688
+          isPrivate: false
+          description: ""
+          sortKey: -1752109427213
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"nome": "Teste 5"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        scripts:
+          preRequest: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{api_url}}/clientes"
+        name: Listar clientes
+        meta:
+          id: req_514de087c9ae40098e21e966936b2043
+          created: 1752109622133
+          modified: 1752109632264
+          isPrivate: false
+          description: ""
+          sortKey: -1752109622133
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{api_url}}/clientes/843/contatos"
+        name: Listar contatos de um cliente
+        meta:
+          id: req_3b5468c22181414fb14aadb3c5f39799
+          created: 1752112589801
+          modified: 1752112925536
+          isPrivate: false
+          description: ""
+          sortKey: -1752112589801
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: contatos
+    meta:
+      id: fld_acb68fdc4a4c4c449f34b43aab99271c
+      created: 1752109281849
+      modified: 1752109281849
+      sortKey: -1752109281849
+      description: ""
+    children:
+      - url: "{{api_url}}/contatos"
+        name: Inserir contato
+        meta:
+          id: req_6d403aaccea3494f9d1b36343caddc9f
+          created: 1752110736062
+          modified: 1752111147578
+          isPrivate: false
+          description: ""
+          sortKey: -1752110736062
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"nomeCliente": "Teste",
+            	"email": "jose@gmail.com",
+            	"telefone": "16992792966"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_c9393dd99809cc25cf8e7c02a74b86b2ff833b4e
+    created: 1752109145901
+    modified: 1752109145901
+environments:
+  name: envs
+  meta:
+    id: env_c9393dd99809cc25cf8e7c02a74b86b2ff833b4e
+    created: 1752109145898
+    modified: 1752109339839
+    isPrivate: false
+  data:
+    api_url: http://localhost:8080/api/v1

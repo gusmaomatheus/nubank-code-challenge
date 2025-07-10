@@ -86,6 +86,12 @@ http://localhost:8080/api/v1/swagger-ui/index.html
    http://localhost:8080/api/v1
    ```
 
+## 📂 Collection de Endpoints para Testes
+
+Para facilitar os testes da API, foi criada uma [collection](./docs/endpoints/nubank-code-challenge.yaml) no formato YAML, compatível com o Insomnia.
+
+Essa collection contém todas as requisições prontas para os endpoints da API, permitindo que o avaliador importe diretamente e realize os testes de forma rápida e prática.
+
 ## 🧑‍💻 Autor
 
 Feito por **[Matheus Gusmão](https://www.linkedin.com/in/gusmaom/)** para o desafio técnico do Nubank.  
