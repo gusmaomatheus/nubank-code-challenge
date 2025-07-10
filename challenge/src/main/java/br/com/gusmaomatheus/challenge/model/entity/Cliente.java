@@ -25,7 +25,6 @@ public final class Cliente {
     }
 
     public void adicionarContato(Contato contato) {
-        contato.setCliente(this);
         this.contatos.add(contato);
     }
 
