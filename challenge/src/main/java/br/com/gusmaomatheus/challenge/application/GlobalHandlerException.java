@@ -11,12 +11,13 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.NoSuchElementException;
+
 @Slf4j
 @RestControllerAdvice
 public final class GlobalHandlerException {
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception,
-                                                                                  HttpServletRequest request,
+    public ResponseEntity<ApiResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception, HttpServletRequest request,
                                                                                   BindingResult result) {
         log.error("********** API ERROR **********", exception);
 
@@ -26,12 +27,20 @@ public final class GlobalHandlerException {
     }
 
     @ExceptionHandler(ResourceAlreadyExistsException.class)
-    public ResponseEntity<ApiResponse> handlerResourceAlreadyExistsException(ResourceAlreadyExistsException exception,
-                                                                             HttpServletRequest request) {
+    public ResponseEntity<ApiResponse> handlerResourceAlreadyExistsException(ResourceAlreadyExistsException exception, HttpServletRequest request) {
         log.error("********** API ERROR **********", exception);
 
         final ApiResponse errorResponse = ApiResponse.error(request, HttpStatus.CONFLICT, exception.getMessage());
 
         return ResponseEntity.status(HttpStatus.CONFLICT).contentType(MediaType.APPLICATION_JSON).body(errorResponse);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<ApiResponse> handlerNoSuchElementException(NoSuchElementException exception, HttpServletRequest request) {
+        log.error("********** API ERROR **********", exception);
+
+        final ApiResponse errorResponse = ApiResponse.error(request, HttpStatus.NOT_FOUND, exception.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).body(errorResponse);
     }
 }
