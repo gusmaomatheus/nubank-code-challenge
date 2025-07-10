@@ -19,6 +19,7 @@ Este projeto foi desenvolvido como parte do processo seletivo para a vaga de Des
 - **Lombok**
 - **Docker** (para subir o PostgreSQL)
 - **Maven**
+- **Springdoc OpenApi** (Swagger)
 
 ## 📁 Estrutura do Projeto
 
@@ -41,6 +42,15 @@ A pasta [`/docs`](./docs) contém:
 
 - 🧬 **Diagrama MER** – Modelo entidade-relacionamento do banco
 - 🔄 **Diagrama UML** – Representação visual das classes e seus relacionamentos
+- 📄 **Desafio** - Descrição completa do desafio
+
+## Documentação da API 📚
+
+A API possui documentação interativa gerada com Swagger/OpenAPI, disponível em:
+
+```
+http://localhost:8080/api/v1/swagger-ui/index.html
+```
 
 ## 🚀 Como Rodar o Projeto
 
@@ -75,11 +85,6 @@ A pasta [`/docs`](./docs) contém:
    ```
    http://localhost:8080/api/v1
    ```
-
-## 📌 Melhorias Futuras
-
-- [ ] Adicionar documentação da API com **Swagger/OpenAPI**
-- [ ] Implementar testes automatizados com **JUnit e Mockito**
 
 ## 🧑‍💻 Autor
 
