@@ -1,27 +1,20 @@
 package br.com.gusmaomatheus.challenge.model.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.*;
 
 @Table(name = "clientes")
 @Entity
 @NoArgsConstructor
-@Getter
 public final class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
+    @Getter
     private String nome;
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Contato> contatos;
@@ -47,5 +40,13 @@ public final class Cliente {
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());
+    }
+
+    public Collection<Contato> getContatos() {
+        if (contatos == null) {
+            return Collections.emptyList();
+        }
+
+        return contatos;
     }
 }

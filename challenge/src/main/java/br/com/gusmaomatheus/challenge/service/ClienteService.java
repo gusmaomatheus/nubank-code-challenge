@@ -2,8 +2,8 @@ package br.com.gusmaomatheus.challenge.service;
 
 import br.com.gusmaomatheus.challenge.application.exception.ResourceAlreadyExistsException;
 import br.com.gusmaomatheus.challenge.model.dto.ClienteResponse;
+import br.com.gusmaomatheus.challenge.model.dto.ContatoResponse;
 import br.com.gusmaomatheus.challenge.model.entity.Cliente;
-import br.com.gusmaomatheus.challenge.model.entity.Contato;
 import br.com.gusmaomatheus.challenge.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 
@@ -37,8 +37,13 @@ public final class ClienteService {
     public List<ClienteResponse> listar() {
         return repository.findAll()
                 .stream()
+                // Stream dentro de stream == matei um panda
                 .map(cliente -> {
-                    final List<Contato> contatos =  cliente.getContatos() != null ? cliente.getContatos() :  Collections.emptyList();
+                    final List<ContatoResponse> contatos =  cliente.getContatos()
+                            .stream()
+                            .map(contato -> new ContatoResponse(contato.getEmail(), contato.getTelefone()))
+                            .toList();
+
                     return new ClienteResponse(cliente.getId(), cliente.getNome(), contatos);
                 })
                 .collect(Collectors.toList());
