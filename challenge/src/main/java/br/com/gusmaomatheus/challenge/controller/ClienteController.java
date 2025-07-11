@@ -4,7 +4,7 @@ import br.com.gusmaomatheus.challenge.application.ApiResponse;
 import br.com.gusmaomatheus.challenge.model.dto.ClienteRequest;
 import br.com.gusmaomatheus.challenge.model.dto.ClienteResponse;
 import br.com.gusmaomatheus.challenge.model.dto.ContatoResponse;
-import br.com.gusmaomatheus.challenge.model.entity.Cliente;
+import br.com.gusmaomatheus.challenge.model.mapper.cliente.ClienteRequestMapper;
 import br.com.gusmaomatheus.challenge.service.ClienteService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -18,15 +18,17 @@ import java.util.List;
 @RequestMapping("/clientes")
 public class ClienteController {
     private final ClienteService service;
+    private final ClienteRequestMapper entityMapper;
 
-    public ClienteController(ClienteService service) {
+    public ClienteController(ClienteService service, ClienteRequestMapper entityMapper) {
         this.service = service;
+        this.entityMapper = entityMapper;
     }
 
     @PostMapping
     public ResponseEntity<ApiResponse<ClienteResponse>> inserir(@Valid @RequestBody ClienteRequest clienteRequest,
                                                                 HttpServletRequest request) {
-        final ClienteResponse clienteResponse = service.inserir(new Cliente(clienteRequest.nome()));
+        final ClienteResponse clienteResponse = service.inserir(entityMapper.toEntity(clienteRequest));
         final ApiResponse<ClienteResponse> body = ApiResponse.success(request, HttpStatus.CREATED, clienteResponse);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(body);

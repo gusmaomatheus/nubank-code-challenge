@@ -3,6 +3,7 @@ package br.com.gusmaomatheus.challenge.model.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.*;
 
@@ -15,6 +16,7 @@ public final class Cliente {
     @Getter
     private Long id;
     @Getter
+    @Setter
     private String nome;
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Contato> contatos;
@@ -25,6 +27,7 @@ public final class Cliente {
     }
 
     public void adicionarContato(Contato contato) {
+        contato.setCliente(this);
         this.contatos.add(contato);
     }
 

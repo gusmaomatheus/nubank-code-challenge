@@ -4,6 +4,8 @@ import br.com.gusmaomatheus.challenge.model.dto.ContatoRequest;
 import br.com.gusmaomatheus.challenge.model.dto.ContatoResponse;
 import br.com.gusmaomatheus.challenge.model.entity.Cliente;
 import br.com.gusmaomatheus.challenge.model.entity.Contato;
+import br.com.gusmaomatheus.challenge.model.mapper.contato.ContatoRequestMapper;
+import br.com.gusmaomatheus.challenge.model.mapper.contato.ContatoResponseMapper;
 import br.com.gusmaomatheus.challenge.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +14,13 @@ import java.util.NoSuchElementException;
 @Service
 public final class ContatoService {
     private final ClienteRepository repository;
+    private final ContatoRequestMapper requestEntityMapper;
+    private final ContatoResponseMapper responseEntityMapper;
 
-    public ContatoService(ClienteRepository repository) {
+    public ContatoService(ClienteRepository repository,ContatoRequestMapper requestEntityMapper, ContatoResponseMapper responseEntityMapper) {
         this.repository = repository;
+        this.requestEntityMapper = requestEntityMapper;
+        this.responseEntityMapper = responseEntityMapper;
     }
 
     public ContatoResponse inserir(ContatoRequest contatoRequest) {
@@ -25,12 +31,12 @@ public final class ContatoService {
             return new NoSuchElementException(errorMesage);
         });
 
-        final Contato contato = new Contato(contatoRequest.email(), contatoRequest.telefone(), cliente);
+        final Contato contato = requestEntityMapper.toEntity(contatoRequest);
 
         cliente.adicionarContato(contato);
 
         repository.save(cliente);
 
-        return new ContatoResponse(contato.getEmail(), contato.getTelefone());
+        return responseEntityMapper.toDto(contato);
     }
 }

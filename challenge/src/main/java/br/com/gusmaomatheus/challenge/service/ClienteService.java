@@ -4,18 +4,27 @@ import br.com.gusmaomatheus.challenge.application.exception.ResourceAlreadyExist
 import br.com.gusmaomatheus.challenge.model.dto.ClienteResponse;
 import br.com.gusmaomatheus.challenge.model.dto.ContatoResponse;
 import br.com.gusmaomatheus.challenge.model.entity.Cliente;
+import br.com.gusmaomatheus.challenge.model.mapper.cliente.ClienteResponseMapper;
+import br.com.gusmaomatheus.challenge.model.mapper.contato.ContatoResponseMapper;
 import br.com.gusmaomatheus.challenge.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 public final class ClienteService {
     private final ClienteRepository repository;
+    private final ClienteResponseMapper clienteMapper;
+    private final ContatoResponseMapper contatoMapper;
 
-    public ClienteService(ClienteRepository repository) {
+
+    public ClienteService(ClienteRepository repository,ClienteResponseMapper clienteMapper, ContatoResponseMapper contatoMapper) {
         this.repository = repository;
+        this.clienteMapper = clienteMapper;
+        this.contatoMapper = contatoMapper;
     }
 
     public ClienteResponse inserir(Cliente cliente) {
@@ -29,7 +38,7 @@ public final class ClienteService {
 
         repository.save(cliente);
 
-        return new ClienteResponse(cliente.getId(), cliente.getNome(), Collections.emptyList());
+        return clienteMapper.toDto(cliente);
     }
 
     public List<ClienteResponse> listar() {
@@ -39,10 +48,10 @@ public final class ClienteService {
                 .map(cliente -> {
                     final List<ContatoResponse> contatos =  cliente.getContatos()
                             .stream()
-                            .map(contato -> new ContatoResponse(contato.getEmail(), contato.getTelefone()))
+                            .map(contatoMapper::toDto)
                             .toList();
 
-                    return new ClienteResponse(cliente.getId(), cliente.getNome(), contatos);
+                    return clienteMapper.toDto(cliente);
                 })
                 .collect(Collectors.toList());
     }
@@ -56,7 +65,7 @@ public final class ClienteService {
 
         return cliente.getContatos()
                 .stream()
-                .map(contato -> new ContatoResponse(contato.getEmail(), contato.getTelefone()))
+                .map(contatoMapper::toDto)
                 .toList();
     }
 }
