@@ -20,6 +20,7 @@ Este projeto foi desenvolvido como parte do processo seletivo para a vaga de Des
 - **Docker** (para subir o PostgreSQL)
 - **Maven**
 - **Springdoc OpenApi** (Swagger)
+- **MapStruct** (facilitar o mapeamnto de DTO -> Entity)
 
 ## 📁 Estrutura do Projeto
 
